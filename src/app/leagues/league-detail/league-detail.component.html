@@ -1,3 +1,57 @@
-<p>
-  league-detail works!
-</p>
+<div class="container">
+
+<div class="league-detail" *ngIf="leagueObs | async as league; else loading">
+  <h1>{{ league.name }}</h1>
+</div>
+
+<h3>Match Form</h3>
+<form (ngSubmit)="matchForm.reset()" [formGroup]="matchForm" fireForm path="{{ matchPath }}" (stateChange)="stateChange($event)">
+  <mat-form-field>
+    <mat-label>Winner</mat-label>
+    <input type="text" matInput formControlName="winner" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let player of players | async" [value]="player.name">{{ player.name }}</mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Loser</mat-label>
+    <input type="text" matInput formControlName="loser" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let player of players | async" [value]="player.name">{{ player.name }}</mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <button mat-button type="submit" [disabled]="!matchForm.valid">Submit</button>
+
+</form>
+
+<h3>Player Form</h3>
+<form (ngSubmit)="playerForm.reset()" [formGroup]="playerForm" fireForm path="{{ playerPath }}" (stateChange)="stateChange($event)">
+  <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name">
+  </mat-form-field>
+
+  <button mat-button type="submit" [disabled]="!playerForm.valid">Submit</button>
+
+</form>
+
+<h3>Matches</h3>
+<ul>
+    <li *ngFor="let match of matches | async">
+      {{ match.winner }} beats {{ match.loser }}
+    </li>
+</ul>
+
+<h3>Ranking</h3>
+<ul>
+    <li *ngFor="let player of players | async">
+      {{ player.name }}
+    </li>
+</ul>
+
+<ng-template #loading>
+    <div>Loading ...</div>
+</ng-template>
+</div>

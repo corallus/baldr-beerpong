@@ -1,3 +1,14 @@
-<p>
-  league-form works!
-</p>
+<form [formGroup]="form" fireForm path="{{ path }}" (ngSubmit)="onSubmit()" (stateChange)="stateChange($event)">
+  <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name">
+  </mat-form-field>
+
+  <mat-form-field>
+      <mat-label>K-Factor</mat-label>
+      <input matInput formControlName="kfactor">
+  </mat-form-field>
+
+  <button mat-button type="submit" [disabled]="!form.valid">Submit</button>
+
+</form>

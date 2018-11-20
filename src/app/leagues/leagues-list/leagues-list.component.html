@@ -1,3 +1,30 @@
-<p>
-  leagues-list works!
-</p>
+<div class="container">
+
+  <h2>Add League</h2>
+  <app-league-form></app-league-form>
+
+  <h2>Current Leagues</h2>
+
+  <div class="row">
+    <div class="col" *ngFor="let league of leagues | async">
+      <mat-card>
+        <mat-card-title>
+          <a [routerLink]="['/league', league.id]" class="btn text-default">
+            {{ league.name }}
+          </a>
+        </mat-card-title>
+        <mat-card-content>
+          k-factor: {{ league.kfactor }}
+        </mat-card-content>
+        <mat-card-actions>
+          <a [routerLink]="['/league', league.id, 'edit']" class="btn text-default">
+            edit <fa-icon [icon]="['fas', 'pencil-alt']"></fa-icon>
+          </a>
+          <a class="btn text-danger" (click)="onDelete(league.id)">
+            <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+          </a>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+  </div>

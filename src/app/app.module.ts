@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatInputModule,
+  MatAutocompleteModule,
   MatPaginatorModule,
   MatProgressSpinnerModule,
   MatSortModule,
@@ -24,13 +25,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LeaguesListComponent } from './leagues/leagues-list/leagues-list.component';
 import { LeagueDetailComponent } from './leagues/league-detail/league-detail.component';
 import { LeagueFormComponent } from './leagues/league-form/league-form.component';
+import { FireFormDirective } from './fire-form.directive';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
   declarations: [
     AppComponent,
     LeaguesListComponent,
     LeagueDetailComponent,
-    LeagueFormComponent
+    LeagueFormComponent,
+    FireFormDirective
   ],
   imports: [
     BrowserModule,
@@ -44,6 +50,7 @@ import { LeagueFormComponent } from './leagues/league-form/league-form.component
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatInputModule,
+    MatAutocompleteModule, 
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -51,9 +58,14 @@ import { LeagueFormComponent } from './leagues/league-form/league-form.component
     MatIconModule,
     MatButtonModule,
     MatCardModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() {
+    library.add(faPencilAlt, faTrash);
+  }
+}

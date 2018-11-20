@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { League } from '../shared/league';
+import { LeagueService } from '../shared/league.service';
 
 @Component({
   selector: 'app-leagues-list',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LeaguesListComponent implements OnInit {
 
-  constructor() { }
+  public leagues: Observable<League[]>;
+
+  constructor(private service: LeagueService) { }
 
   ngOnInit() {
+    this.leagues = this.service.list();
   }
 
+  onDelete(id: string) {
+    if (confirm("Are you sure to delete this record?")) {
+      this.service.delete(id);
+    }
+  }
 }

@@ -1,98 +1,61 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { League, Match, Player } from './league';
+import { League } from './league';
+import { AuthService } from '../../core/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class LeagueService {
-  private basePath: string = '/leagues';
+export class LeagueService implements OnDestroy {
+  private uid: string;
 
-  private leagueDoc: AngularFirestoreDocument<League>;
-  league: Observable<League> = null;
+  private collection: AngularFirestoreCollection<League>;
 
-  private leagueCollection: AngularFirestoreCollection<League>;
-  leagues: Observable<League[]> = null;
-
-  private matchCollection: AngularFirestoreCollection<Match>;
-  matches: Observable<Match[]> = null;
-
-  private playerCollection: AngularFirestoreCollection<Player>;
-  players: Observable<Player[]> = null;
-
-  constructor(private db: AngularFirestore) { 
-    this.leagueCollection = this.db.collection<League>(this.basePath);
+  constructor(private auth: AuthService, private db: AngularFirestore) { 
+    console.log('LeagueService instance created.');
+    this.collection = this.db.collection<League>('leagues');
+    this.auth.user.subscribe(user => {
+      if(user) this.uid = user.uid
+    })
   }
-
-  get_matches(): Observable<Match[]> {
-    this.matches = this.matchCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Match;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      }))
-    );
-    return this.matches
-  }
-
-  get_players(): Observable<Player[]> {
-    this.players = this.playerCollection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Player;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      }))
-    );
-    return this.players
-  }
-
-  play(match: Match): void  {
-    this.matchCollection.add({... match});
-  }
+  ngOnDestroy() { console.log('LeagueService instance destroyed.'); }
 
   list(): Observable<League[]> {
-    this.leagues = this.leagueCollection.snapshotChanges().pipe(
+    return this.collection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as League;
         const id = a.payload.doc.id;
         return { id, ...data };
       }))
     );
-    return this.leagues
   }
   
   // Return a single observable item
-  get(key: string): Observable<League> {
-    const leaguePath =  `${this.basePath}/${key}`;
-    const matchPath = `${leaguePath}/matches`;
-    const playerPath = `${leaguePath}/players`;
-    this.matchCollection = this.db.collection<Match>(matchPath);
-    this.playerCollection = this.db.collection<Player>(playerPath);
-    this.leagueDoc = this.db.doc<League>(leaguePath);
-    this.league = this.leagueDoc.valueChanges();
-    return this.league
+  get(key: string): AngularFirestoreDocument<League> {
+    return this.collection.doc(key);
+    //return this.doc.valueChanges();
   }
 
-  create(league: League): void  {
-    this.leagueCollection.add({... league});
+  add(league: League): void {
+    this.auth.user.subscribe(user => {
+      if(user) this.collection.add({ ...league, uid: this.uid }).catch(error => this.handleError(error));
+    })
   }
- 
-  // Update an existing league
-  update(league: League): void {
-    this.leagueDoc.update(league);
+
+  update(document: AngularFirestoreDocument<League>, league: League): void {
+      document.update(league).catch(error => this.handleError(error));
   }
  
   // Deletes a single league
   delete(key: string): void {
-    const league = this.get(key);
-    this.leagueDoc.delete();
+    this.collection.doc(key).delete().catch(error => this.handleError(error));
   }
- 
-  // Default error handling for all actions
+
   private handleError(error) {
-    console.log(error)
-  }u
+    console.log(error);
+    console.log('in leagueService');
+  }
 }

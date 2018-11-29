@@ -19,16 +19,22 @@ import {
   MatTableModule,
   MatIconModule,
   MatButtonModule,
+  MatToolbarModule,
   MatCardModule,
-  MatFormFieldModule } from "@angular/material";
+  MatFormFieldModule, 
+  MatMenuModule} from "@angular/material";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LeaguesListComponent } from './leagues/leagues-list/leagues-list.component';
 import { LeagueDetailComponent } from './leagues/league-detail/league-detail.component';
 import { LeagueFormComponent } from './leagues/league-form/league-form.component';
-import { FireFormDirective } from './fire-form.directive';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { MatchListComponent } from './matches/match-list/match-list.component';
+import { MatchCreateComponent } from './matches/match-create/match-create.component';
+import { PlayerCreateComponent } from './players/player-create/player-create.component';
+import { PlayerListComponent } from './players/player-list/player-list.component';
+import { AuthService } from './core/auth.service';
 
 @NgModule({
   declarations: [
@@ -36,13 +42,16 @@ import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
     LeaguesListComponent,
     LeagueDetailComponent,
     LeagueFormComponent,
-    FireFormDirective
+    MatchListComponent,
+    MatchCreateComponent,
+    PlayerCreateComponent,
+    PlayerListComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase), // imports firebase/app needed for everything
-    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
     BrowserAnimationsModule,
@@ -57,11 +66,13 @@ import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
     MatProgressSpinnerModule,
     MatIconModule,
     MatButtonModule,
+    MatToolbarModule,
     MatCardModule,
+    MatMenuModule,
     MatFormFieldModule,
     FontAwesomeModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,12 +1,11 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" (stateChange)="stateChange($event)">
   <mat-form-field>
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="name">
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name">
   </mat-form-field>
-
   <mat-form-field>
-      <mat-label>K-Factor</mat-label>
-      <input matInput type="number" formControlName="kfactor" placeholder="auto">
+      <mat-label>Score</mat-label>
+      <input matInput type="number" formControlName="score" placeholder="auto">
   </mat-form-field>
 
   <button mat-button type="submit" [disabled]="!form.valid">Submit</button>

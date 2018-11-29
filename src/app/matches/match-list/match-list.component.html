@@ -1,0 +1,10 @@
+<ul>
+  <li *ngFor="let match of matches | async; first as isFirst">
+    {{ match.winner.name }} beats {{ match.loser.name }}
+    <span *ngIf="isFirst">
+      <a class="btn text-danger" (click)="delete(match.id)">
+        <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+      </a>
+    </span>
+  </li>
+</ul>

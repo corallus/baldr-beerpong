@@ -1,57 +1,29 @@
-<div class="container">
-
+<a [routerLink]="['/']" class="btn text-default">
+  leagues
+</a>
 <div class="league-detail" *ngIf="leagueObs | async as league; else loading">
   <h1>{{ league.name }}</h1>
+  <app-league-form [document]="document"></app-league-form>
+  {{ league.key }}
+
+  <h3>Match Form</h3>
+  <app-match-create></app-match-create>
+
+  <h3>Player Form</h3>
+  <app-player-create></app-player-create>
+
+  <div class="row">
+    <div class="col-md-4 order-md-2">
+      <h3>Matches</h3>
+      <app-match-list></app-match-list>
+    </div>
+    <div class="col-md-8">
+      <h3>Ranking</h3>
+      <app-player-list></app-player-list>
+    </div>
+  </div>
 </div>
-
-<h3>Match Form</h3>
-<form (ngSubmit)="matchForm.reset()" [formGroup]="matchForm" fireForm path="{{ matchPath }}" (stateChange)="stateChange($event)">
-  <mat-form-field>
-    <mat-label>Winner</mat-label>
-    <input type="text" matInput formControlName="winner" [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let player of players | async" [value]="player.name">{{ player.name }}</mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-
-  <mat-form-field>
-    <mat-label>Loser</mat-label>
-    <input type="text" matInput formControlName="loser" [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let player of players | async" [value]="player.name">{{ player.name }}</mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-
-  <button mat-button type="submit" [disabled]="!matchForm.valid">Submit</button>
-
-</form>
-
-<h3>Player Form</h3>
-<form (ngSubmit)="playerForm.reset()" [formGroup]="playerForm" fireForm path="{{ playerPath }}" (stateChange)="stateChange($event)">
-  <mat-form-field>
-      <mat-label>Name</mat-label>
-      <input matInput formControlName="name">
-  </mat-form-field>
-
-  <button mat-button type="submit" [disabled]="!playerForm.valid">Submit</button>
-
-</form>
-
-<h3>Matches</h3>
-<ul>
-    <li *ngFor="let match of matches | async">
-      {{ match.winner }} beats {{ match.loser }}
-    </li>
-</ul>
-
-<h3>Ranking</h3>
-<ul>
-    <li *ngFor="let player of players | async">
-      {{ player.name }}
-    </li>
-</ul>
 
 <ng-template #loading>
-    <div>Loading ...</div>
+  <div>Loading ...</div>
 </ng-template>
-</div>

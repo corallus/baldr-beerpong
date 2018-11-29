@@ -1,0 +1,10 @@
+<ul>
+  <li *ngFor="let player of players | async">
+    {{ player.name }}
+    {{ player.score }}
+
+    <a class="btn text-danger" (click)="delete(player.id)">
+      <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+    </a>
+  </li>
+</ul>

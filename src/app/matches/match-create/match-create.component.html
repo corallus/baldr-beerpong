@@ -1,15 +1,15 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" (stateChange)="stateChange($event)">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
   <mat-form-field>
-    <mat-label>Winner</mat-label>
-    <input type="text" matInput formControlName="winner" [matAutocomplete]="auto">
+    <mat-label>Player 1</mat-label>
+    <input type="text" matInput formControlName="white" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName">
       <mat-option *ngFor="let player of players | async" [value]="player">{{ player.name }}</mat-option>
     </mat-autocomplete>
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Loser</mat-label>
-    <input type="text" matInput formControlName="loser" [matAutocomplete]="auto">
+    <mat-label>Player 2</mat-label>
+    <input type="text" matInput formControlName="black" [matAutocomplete]="auto">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayName">
       <mat-option *ngFor="let player of players | async" [value]="player">{{ player.name }}</mat-option>
     </mat-autocomplete>

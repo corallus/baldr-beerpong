@@ -14,10 +14,10 @@ export class MatchCreateComponent implements OnInit {
   players: Observable<Player[]>;
 
   form = new FormGroup({
-    winner: new FormControl('', [
+    white: new FormControl('', [
       Validators.required
     ]),
-    loser: new FormControl('', [
+    black: new FormControl('', [
       Validators.required
     ]),
   });
@@ -30,10 +30,6 @@ export class MatchCreateComponent implements OnInit {
 
   displayName(player?: Player): string | undefined {
     return player ? player.name : undefined;
-  }
-
-  stateChange(state: string) {
-    console.log(state);
   }
 
   onSubmit() {

@@ -1,4 +1,5 @@
-export interface Player {
+export class Player {
+    id?: string;
     name: string;
-    score: number;
+    score: number = 1500;
 }

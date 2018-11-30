@@ -1,9 +1,9 @@
 <a [routerLink]="['/']" class="btn text-default">
   leagues
 </a>
-<div class="league-detail" *ngIf="leagueObs | async as league; else loading">
+<div class="league-detail" *ngIf="league | async as league; else loading">
   <h1>{{ league.name }}</h1>
-  <app-league-form [document]="document"></app-league-form>
+  <app-league-form></app-league-form>
   {{ league.key }}
 
   <h3>Match Form</h3>

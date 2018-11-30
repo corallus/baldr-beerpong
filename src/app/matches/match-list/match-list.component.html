@@ -1,6 +1,30 @@
+<h4>Planned</h4>
 <ul>
-  <li *ngFor="let match of matches | async; first as isFirst">
-    {{ match.winner.name }} beats {{ match.loser.name }}
+  <li *ngFor="let match of plannedMatches | async; first as isFirst">
+    <a (click)="setResult(match,1)">
+    {{ match.white.name }}
+    </a>
+    vs
+    <a (click)="setResult(match,-1)">
+     {{ match.black.name }}
+     </a>
+    <span *ngIf="isFirst">
+      <a class="btn text-danger" (click)="delete(match.id)">
+        <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+      </a>
+    </span>
+  </li>
+</ul>
+<h4>Finished</h4>
+<ul>
+  <li *ngFor="let match of finishedMatches | async; first as isFirst">
+    <span class="{{ match.result==1 ? 'winner' : 'loser' }}">
+    {{ match.white.name }}
+    </span>
+     vs 
+    <span class="{{ match.result==-1 ? 'winner' : 'loser' }}">
+     {{ match.black.name }}
+     </span>
     <span *ngIf="isFirst">
       <a class="btn text-danger" (click)="delete(match.id)">
         <fa-icon [icon]="['fas', 'trash']"></fa-icon>

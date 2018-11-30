@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -18,7 +18,7 @@ interface User {
 }
 
 @Injectable()
-export class AuthService {
+export class AuthService implements OnDestroy{
   user: Observable<User | null>;
 
   constructor(
@@ -26,6 +26,7 @@ export class AuthService {
     private afs: AngularFirestore,
     private router: Router,
   ) {
+    console.log('authService instance created');
     this.user = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
@@ -37,6 +38,10 @@ export class AuthService {
       // tap(user => localStorage.setItem('user', JSON.stringify(user))),
       // startWith(JSON.parse(localStorage.getItem('user')))
     );
+  }
+
+  ngOnDestroy() {
+    console.log('authService instance destroyed');
   }
 
   ////// OAuth Methods /////
@@ -97,9 +102,6 @@ export class AuthService {
   emailLogin(email: string, password: string) {
     return this.afAuth.auth
       .signInWithEmailAndPassword(email, password)
-      .then(credential => {
-        return this.updateUserData(credential.user);
-      })
       .catch(error => this.handleError(error));
   }
 

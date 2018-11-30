@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PlayerService } from '../shared/player.service';
+import { Player } from '../shared/player';
 
 @Component({
   selector: 'app-player-create',
@@ -8,6 +9,9 @@ import { PlayerService } from '../shared/player.service';
   styleUrls: ['./player-create.component.scss'],
 })
 export class PlayerCreateComponent implements OnInit {
+
+  initialFormValues: Player;
+
   form = new FormGroup({
     name: new FormControl('', [
       Validators.required
@@ -20,6 +24,7 @@ export class PlayerCreateComponent implements OnInit {
   constructor(private service: PlayerService) { }
 
   ngOnInit() {
+    this.initialFormValues = this.form.value;
   }
 
   stateChange(state: string) {
@@ -29,5 +34,6 @@ export class PlayerCreateComponent implements OnInit {
   onSubmit() {
     this.service.create(this.form.value)
     this.form.reset();
+    this.form.patchValue(this.initialFormValues);
   }
 }

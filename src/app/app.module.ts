@@ -22,7 +22,8 @@ import {
   MatToolbarModule,
   MatCardModule,
   MatFormFieldModule, 
-  MatMenuModule} from "@angular/material";
+  MatMenuModule,
+  MatBadgeModule} from "@angular/material";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LeaguesListComponent } from './leagues/leagues-list/leagues-list.component';
 import { LeagueDetailComponent } from './leagues/league-detail/league-detail.component';
@@ -59,6 +60,7 @@ import { AuthService } from './core/auth.service';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatInputModule,
+    MatBadgeModule,
     MatAutocompleteModule, 
     MatTableModule,
     MatPaginatorModule,

@@ -10,18 +10,17 @@ import { AuthService } from '../../core/auth.service';
   providedIn: 'root'
 })
 export class LeagueService implements OnDestroy {
-  private uid: string;
+  document: AngularFirestoreDocument<League> = null;
 
   private collection: AngularFirestoreCollection<League>;
 
   constructor(private auth: AuthService, private db: AngularFirestore) { 
     console.log('LeagueService instance created.');
     this.collection = this.db.collection<League>('leagues');
-    this.auth.user.subscribe(user => {
-      if(user) this.uid = user.uid
-    })
   }
-  ngOnDestroy() { console.log('LeagueService instance destroyed.'); }
+  ngOnDestroy() { 
+    console.log('LeagueService instance destroyed.'); 
+  }
 
   list(): Observable<League[]> {
     return this.collection.snapshotChanges().pipe(
@@ -32,21 +31,25 @@ export class LeagueService implements OnDestroy {
       }))
     );
   }
+
+  getLeague(): Observable<League> {
+    return this.document.valueChanges();
+  }
   
   // Return a single observable item
-  get(key: string): AngularFirestoreDocument<League> {
-    return this.collection.doc(key);
-    //return this.doc.valueChanges();
+  get(key: string): Observable<League> {
+    this.document = this.collection.doc(key);
+    return this.getLeague();
   }
 
   add(league: League): void {
     this.auth.user.subscribe(user => {
-      if(user) this.collection.add({ ...league, uid: this.uid }).catch(error => this.handleError(error));
+      if(user) this.collection.add({ ...league, uid: user.uid }).catch(error => this.handleError(error));
     })
   }
 
-  update(document: AngularFirestoreDocument<League>, league: League): void {
-      document.update(league).catch(error => this.handleError(error));
+  update(league: League): void {
+      this.document.update(league).catch(error => this.handleError(error));
   }
  
   // Deletes a single league

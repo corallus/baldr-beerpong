@@ -1,9 +1,12 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /leagues/{league} {
       function isSignedIn() {
         return request.auth != null;
       }
+    match /users/{user} {
+      allow read: if true;
+    }
+    match /leagues/{league} {
 
       function isOwner() {
         return resource.data.uid == request.auth.uid;
@@ -24,18 +27,19 @@ service cloud.firestore {
 
       match /players/{player} {
         function validatePlayerData() {
-          return request.resource.data.keys().hasAll(['score', 'name']) && request.resource.data.score is int && request.resource.data.name is string;
+          return true;
+          //return request.resource.data.keys().hasAll(['score', 'name']) && request.resource.data.score is int && request.resource.data.name is string;
         }
 
         allow create: if isSignedIn() && ownsLeague() && validatePlayerData();
         allow delete: if isSignedIn() && ownsLeague();
-        allow update: if false;
+        allow update: if isSignedIn() && ownsLeague();
         allow read: if true;
       }
 
       match /matches/{matchId} {
         function validateMatchData() {
-          return request.resource.data.winner.id != request.resource.data.loser.id;
+          return request.resource.data.white.id != request.resource.data.black.id;
         }
 
         allow create: if isSignedIn() && ownsLeague() && validateMatchData();

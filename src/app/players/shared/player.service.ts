@@ -4,21 +4,28 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Player } from './player';
-import { League } from '../../leagues/shared/league';
+import { LeagueService } from '../../leagues/shared/league.service';
 
 @Injectable()
 export class PlayerService implements OnDestroy {
   private collection: AngularFirestoreCollection<Player>;
 
-  constructor() { console.log('PlayerService instance created.'); }
-  ngOnDestroy() { console.log('PlayerService instance destroyed.'); }
-
-  init(leagueDoc: AngularFirestoreDocument<League>): void {
-    this.collection = leagueDoc.collection('players');
+  constructor(private leagueService: LeagueService) { 
+    console.log('PlayerService instance created.'); 
+    this.collection = this.leagueService.document.collection('players', ref => {
+      return ref.orderBy('score', 'desc');
+    });
   }
+  ngOnDestroy() { console.log('PlayerService instance destroyed.'); }
 
   create(player: Player): void  {
     this.collection.add({... player});
+  }
+
+  updateScore(player: Player, score: number) {
+    this.collection.doc(player.id).update({score: score })
+    .then(_ => console.log('player score updated'))
+    .catch(error => this.handleError(error));
   }
 
   // Return a single observable item

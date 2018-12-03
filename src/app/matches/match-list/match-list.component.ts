@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Match, Result } from '../shared/match';
+import { Match } from '../shared/match';
 import { MatchService } from '../shared/match.service';
 
 @Component({
@@ -9,23 +9,12 @@ import { MatchService } from '../shared/match.service';
   styleUrls: ['./match-list.component.scss']
 })
 export class MatchListComponent implements OnInit {
-  finishedMatches: Observable<Match[]>;
-  plannedMatches: Observable<Match[]>;
+  matches: Observable<Match[]>;
 
   constructor(private service: MatchService) { }
 
   ngOnInit() {
-    this.finishedMatches = this.service.finishedMatches();
-    this.plannedMatches = this.service.plannedMatches()
+    this.matches = this.service.list();
   }
 
-  delete(key: string) {
-    if (confirm("Are you sure to delete this record?")) {
-      this.service.delete(key);
-    }
-  }
-
-  setResult(match: Match, result: Result) {
-    this.service.updateResult(match, result);
-  }
 }

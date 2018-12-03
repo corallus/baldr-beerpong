@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap, take } from 'rxjs/operators';
 
 import { Player } from './player';
 import { LeagueService } from '../../leagues/shared/league.service';
@@ -12,7 +12,7 @@ export class PlayerService implements OnDestroy {
 
   constructor(private leagueService: LeagueService) { 
     console.log('PlayerService instance created.'); 
-    this.collection = this.leagueService.document.collection('players', ref => {
+    this.collection = this.leagueService.document.collection<Player>('players', ref => {
       return ref.orderBy('score', 'desc');
     });
   }
@@ -22,16 +22,24 @@ export class PlayerService implements OnDestroy {
     this.collection.add({... player});
   }
 
-  updateScore(player: Player, score: number) {
-    this.collection.doc(player.id).update({score: score })
-    .then(_ => console.log('player score updated'))
-    .catch(error => this.handleError(error));
+  updateScore(player: Player, shift: number) {
+    this.get(player.id).pipe(
+      tap(dbplayer => {
+        if (dbplayer) {
+          const score = dbplayer.score - shift;
+          this.collection.doc(player.id).update({ score: score })
+            .then(_ => console.log('player score updated'))
+            .catch(error => this.handleError(error));
+        }
+      }),
+      take(1)
+    )
+      .subscribe();
   }
 
   // Return a single observable item
-  get(key: string) {
-    let doc: AngularFirestoreDocument<Player> = this.collection.doc(key);
-    return doc.snapshotChanges();
+  get(key: string): Observable<Player> {
+    return this.collection.doc<Player>(key).valueChanges();
   }
 
   list(): Observable<Player[]> {

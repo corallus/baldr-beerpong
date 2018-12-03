@@ -36,6 +36,7 @@ import { MatchCreateComponent } from './matches/match-create/match-create.compon
 import { PlayerCreateComponent } from './players/player-create/player-create.component';
 import { PlayerListComponent } from './players/player-list/player-list.component';
 import { AuthService } from './core/auth.service';
+import { MatchDetailComponent } from './matches/match-list/match-detail/match-detail.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { AuthService } from './core/auth.service';
     MatchCreateComponent,
     PlayerCreateComponent,
     PlayerListComponent,
+    MatchDetailComponent,
   ],
   imports: [
     BrowserModule,

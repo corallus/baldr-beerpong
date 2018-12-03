@@ -33,7 +33,8 @@ export class MatchCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    this.service.create(this.form.value)
+    console.log(this.form.value);
+    this.service.create(this.form.value);
     this.form.reset();
   }
 

@@ -1,10 +1,10 @@
 import { Player } from "../../players/shared/player";
-
-export type Result = 1 | 0 | -1;
+import { Adjustment, Result } from "./elo"
 
 export class Match {
     id?: string;
     white: Player;
     black: Player;
-    result?: Result;
+    result?: Result = 0;
+    adjustment?: Adjustment;
 }

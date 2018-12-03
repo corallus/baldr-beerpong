@@ -1,0 +1,24 @@
+<span *ngIf="match">
+  <a (click)="setResult(match,1)">
+    <span class="{{ match.result==1 ? 'winner' : 'loser' }}">
+      {{ match.white.name }}
+      <span *ngIf="match.adjustment !== undefined">
+        ({{ match.adjustment.shift.white }})
+      </span>
+    </span>
+  </a>
+  vs
+  <a (click)="setResult(match,-1)">
+    <span class="{{ match.result==-1 ? 'winner' : 'loser' }}">
+      {{ match.black.name }}
+      <span *ngIf="match.adjustment !== undefined">
+        ({{ match.adjustment.shift.black }})
+      </span>
+    </span>
+  </a>
+  <span>
+    <a class="btn text-danger" (click)="delete(match)">
+      <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+    </a>
+  </span>
+</span>

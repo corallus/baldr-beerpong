@@ -35,10 +35,6 @@ export class LeagueFormComponent implements OnInit {
     }
   }
 
-  stateChange(state: string) {
-    console.log(state);
-  }
-
   onSubmit() {
     if (this.service.document) {
       this.service.update(this.form.value)

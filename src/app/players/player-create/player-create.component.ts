@@ -27,10 +27,6 @@ export class PlayerCreateComponent implements OnInit {
     this.initialFormValues = this.form.value;
   }
 
-  stateChange(state: string) {
-    console.log(state);
-  }
-
   onSubmit() {
     this.service.create(this.form.value)
     this.form.reset();

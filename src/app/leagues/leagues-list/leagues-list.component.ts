@@ -10,7 +10,7 @@ import { LeagueService } from '../shared/league.service';
 })
 export class LeaguesListComponent implements OnInit {
 
-  public leagues: Observable<League[]>;
+  leagues: Observable<League[]>;
 
   constructor(private service: LeagueService) { }
 

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LeaguesListComponent } from './leagues/leagues-list/leagues-list.component';
 import { LeagueDetailComponent } from './leagues/league-detail/league-detail.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: LeaguesListComponent,
-    data: { title: 'Leagues' },
+    component: DashboardComponent,
+    data: { title: 'Dashboard' },
     pathMatch: 'full'
   },
   {

@@ -3,14 +3,18 @@
 </a>
 <div class="league-detail" *ngIf="league | async as league; else loading">
   <h1>{{ league.name }}</h1>
-  <app-league-form></app-league-form>
-  {{ league.key }}
+  <div *ngIf="auth.user | async as user">
+    <div *ngIf="user.uid == league.uid">
+      <app-league-form></app-league-form>
+      {{ league.key }}
 
-  <h3>Match Form</h3>
-  <app-match-create></app-match-create>
+      <h3>Match Form</h3>
+      <app-match-create></app-match-create>
 
-  <h3>Player Form</h3>
-  <app-player-create></app-player-create>
+      <h3>Player Form</h3>
+      <app-player-create></app-player-create>
+    </div>
+  </div>
 
   <div class="row">
     <div class="col-md-4 order-md-2">

@@ -28,15 +28,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LeaguesListComponent } from './leagues/leagues-list/leagues-list.component';
 import { LeagueDetailComponent } from './leagues/league-detail/league-detail.component';
 import { LeagueFormComponent } from './leagues/league-form/league-form.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPencilAlt, faTrash, faUndo } from '@fortawesome/free-solid-svg-icons';
 import { MatchListComponent } from './matches/match-list/match-list.component';
 import { MatchCreateComponent } from './matches/match-create/match-create.component';
 import { PlayerCreateComponent } from './players/player-create/player-create.component';
 import { PlayerListComponent } from './players/player-list/player-list.component';
 import { AuthService } from './core/auth.service';
 import { MatchDetailComponent } from './matches/match-list/match-detail/match-detail.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +47,7 @@ import { MatchDetailComponent } from './matches/match-list/match-detail/match-de
     PlayerCreateComponent,
     PlayerListComponent,
     MatchDetailComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,14 +72,12 @@ import { MatchDetailComponent } from './matches/match-list/match-detail/match-de
     MatToolbarModule,
     MatCardModule,
     MatMenuModule,
-    MatFormFieldModule,
-    FontAwesomeModule
+    MatFormFieldModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor() {
-    library.add(faPencilAlt, faTrash, faUndo);
   }
 }

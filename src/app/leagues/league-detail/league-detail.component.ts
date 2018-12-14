@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { League } from '../shared/league'
 import { LeagueService } from '../shared/league.service'
 import { MatchService } from '../../matches/shared/match.service';
-import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { PlayerService } from '../../players/shared/player.service';
+import { AuthService } from 'src/app/core/auth.service';
 
 @Component({
   selector: 'app-league-detail',
@@ -16,7 +16,7 @@ import { PlayerService } from '../../players/shared/player.service';
 export class LeagueDetailComponent implements OnInit, OnDestroy {
   league: Observable<League>;
 
-  constructor(private route: ActivatedRoute, private service: LeagueService) { }
+  constructor(public auth: AuthService, private route: ActivatedRoute, private service: LeagueService) { }
 
   ngOnInit() {
     this.league = this.service.get(this.route.snapshot.params['id']);

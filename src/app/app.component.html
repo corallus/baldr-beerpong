@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
     <div class="container">
             <div *ngIf="auth.user | async as user; else showLogin">
-                <h1>Hello Vincent!</h1>
+                <h1>Hello {{ user.displayName }}!</h1>
                 <button mat-button (click)="auth.signOut()">Logout</button>
             </div>
             <ng-template #showLogin>

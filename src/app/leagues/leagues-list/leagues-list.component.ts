@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { League } from '../shared/league';
 import { LeagueService } from '../shared/league.service';
+import { AuthService } from 'src/app/core/auth.service';
 
 @Component({
   selector: 'app-leagues-list',
@@ -9,18 +10,22 @@ import { LeagueService } from '../shared/league.service';
   styleUrls: ['./leagues-list.component.scss']
 })
 export class LeaguesListComponent implements OnInit {
+  @Input() uid?: string
+  leagues: Observable<League[]>
 
-  leagues: Observable<League[]>;
-
-  constructor(private service: LeagueService) { }
+  constructor(public auth: AuthService, public service: LeagueService) { }
 
   ngOnInit() {
-    this.leagues = this.service.list();
+    if (this.uid) {
+      this.leagues = this.service.listOwnedLeagues(this.uid);
+    } else {
+      this.leagues = this.service.list();
+    }
   }
 
   onDelete(id: string) {
     if (confirm("Are you sure to delete this record?")) {
-      this.service.delete(id);
+      this.service.delete(id)
     }
   }
 }

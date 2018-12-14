@@ -27,8 +27,8 @@ export class MatchService implements OnDestroy {
   delete(match: Match): void {
     this.collection.doc(match.id).delete().then(_ => {
       if (match.result) {
-        this.playerService.updateScore(match.white, match.adjustment.shift.white);
-        this.playerService.updateScore(match.black, match.adjustment.shift.black);
+        this.playerService.updateScore(match.white, -match.adjustment.shift.white);
+        this.playerService.updateScore(match.black, -match.adjustment.shift.black);
       }
     }).catch(error => this.handleError(error));
   }
@@ -40,8 +40,15 @@ export class MatchService implements OnDestroy {
           const adj = adjustment(match.white.score, match.black.score, result, league.kfactor);
           this.collection.doc(match.id).update({ result: result, adjustment: adj })
             .then(_ => {
-              this.playerService.updateScore(match.white, -adj.shift.white);
-              this.playerService.updateScore(match.black, -adj.shift.black);
+              if (match.result===undefined) {
+                this.playerService.updateScore(match.white, adj.shift.white);
+                this.playerService.updateScore(match.black, adj.shift.black);
+              } else {
+                  if (match.result != result) {
+                    this.playerService.updateScore(match.white, 2*adj.shift.white);
+                    this.playerService.updateScore(match.black, 2*adj.shift.black);
+                  } 
+              }
             })
             .catch(error => this.handleError(error));
         }

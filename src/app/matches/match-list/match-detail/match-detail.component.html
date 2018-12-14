@@ -1,5 +1,5 @@
 <span *ngIf="match">
-  <a (click)="setResult(match,1)">
+  <a (click)="setResult(1)">
     <span class="{{ match.result==1 ? 'winner' : 'loser' }}">
       {{ match.white.name }}
       <span *ngIf="match.adjustment !== undefined">
@@ -8,7 +8,7 @@
     </span>
   </a>
   vs
-  <a (click)="setResult(match,-1)">
+  <a (click)="setResult(-1)">
     <span class="{{ match.result==-1 ? 'winner' : 'loser' }}">
       {{ match.black.name }}
       <span *ngIf="match.adjustment !== undefined">

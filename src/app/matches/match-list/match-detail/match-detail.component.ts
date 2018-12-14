@@ -9,18 +9,18 @@ import { Result } from '../../shared/elo';
   styleUrls: ['./match-detail.component.scss']
 })
 export class MatchDetailComponent {
-  @Input() match: Match;
+  @Input() match: Match
 
   constructor(private service: MatchService) { }
 
   delete(match: Match) {
     if (confirm("Are you sure to delete this record?")) {
-      this.service.delete(match);
+      this.service.delete(match)
     }
   }
 
   setResult(result: Result) {
-    this.service.updateResult(this.match, result);
+    this.service.updateResult(this.match, result)
   }
 
 }

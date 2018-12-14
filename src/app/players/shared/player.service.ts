@@ -26,9 +26,8 @@ export class PlayerService implements OnDestroy {
     this.get(player.id).pipe(
       tap(dbplayer => {
         if (dbplayer) {
-          const score = dbplayer.score - shift;
+          const score = dbplayer.score + shift;
           this.collection.doc(player.id).update({ score: score })
-            .then(_ => console.log('player score updated'))
             .catch(error => this.handleError(error));
         }
       }),

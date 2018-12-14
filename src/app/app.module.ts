@@ -30,7 +30,7 @@ import { LeagueDetailComponent } from './leagues/league-detail/league-detail.com
 import { LeagueFormComponent } from './leagues/league-form/league-form.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPencilAlt, faTrash, faUndo } from '@fortawesome/free-solid-svg-icons';
 import { MatchListComponent } from './matches/match-list/match-list.component';
 import { MatchCreateComponent } from './matches/match-create/match-create.component';
 import { PlayerCreateComponent } from './players/player-create/player-create.component';
@@ -81,6 +81,6 @@ import { MatchDetailComponent } from './matches/match-list/match-detail/match-de
 })
 export class AppModule {
   constructor() {
-    library.add(faPencilAlt, faTrash);
+    library.add(faPencilAlt, faTrash, faUndo);
   }
 }

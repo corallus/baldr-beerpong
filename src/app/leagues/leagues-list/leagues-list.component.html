@@ -1,6 +1,6 @@
-<div class="row">
-  <div class="col" *ngFor="let league of leagues | async">
-    <mat-card>
+<div fxLayout="row wrap" fxLayout.lt-sm="column" fxLayoutGap="32px" fxLayoutAlign="flex-start">
+  <ng-container *ngFor="let league of leagues | async">
+    <mat-card fxFlex="0 1 calc(33.3% - 32px)" fxFlex.lt-md="0 1 calc(50% - 32px)" fxFlex.lt-sm="100%" class="league-card">
       <mat-card-title>
         <a [routerLink]="['/league', league.id]" class="btn text-default">
           {{ league.name }}
@@ -12,10 +12,10 @@
       <mat-card-actions *ngIf="auth.user | async as user">
         <div *ngIf="user.uid == league.uid">
           <a class="btn text-danger" (click)="onDelete(league.id)">
-              <mat-icon>delete</mat-icon>
+            <mat-icon>delete</mat-icon>
           </a>
         </div>
       </mat-card-actions>
     </mat-card>
-  </div>
+  </ng-container>
 </div>

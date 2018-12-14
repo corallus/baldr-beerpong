@@ -1,33 +1,3 @@
-<mat-toolbar color="primary">
-    <div class="container">
-            <div *ngIf="auth.user | async as user; else showLogin">
-                <h1>Hello {{ user.displayName }}!</h1>
-                <button mat-button (click)="auth.signOut()">Logout</button>
-            </div>
-            <ng-template #showLogin>
-                    <button mat-button [matMenuTriggerFor]="menu">Login</button>
-                    <mat-menu #menu="matMenu">
-                        <button mat-menu-item (click)="auth.anonymousLogin()">Sign in</button>
-                        <button mat-menu-item (click)="auth.googleLogin()">Google sign in</button>
-                    </mat-menu>
-
-                <form [formGroup]="form" style="float: right" (ngSubmit)="emailLogin()" (stateChange)="stateChange($event)">
-                    <mat-form-field>
-                        <mat-label>Email</mat-label>
-                        <input matInput formControlName="email">
-                    </mat-form-field>
-
-                    <mat-form-field>
-                        <mat-label>Password</mat-label>
-                        <input matInput type="password" formControlName="password" placeholder="auto">
-                    </mat-form-field>
-
-                    <button mat-button type="submit" [disabled]="!form.valid">Login</button>
-
-                </form>
-            </ng-template>
-    </div>
-</mat-toolbar>
 <div class="container">
     <router-outlet></router-outlet>
 </div>

@@ -20,6 +20,7 @@ import {
   MatIconModule,
   MatButtonModule,
   MatToolbarModule,
+  MatGridListModule,
   MatCardModule,
   MatFormFieldModule, 
   MatMenuModule,
@@ -35,6 +36,7 @@ import { PlayerListComponent } from './players/player-list/player-list.component
 import { AuthService } from './core/auth.service';
 import { MatchDetailComponent } from './matches/match-list/match-detail/match-detail.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -70,9 +72,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
+    MatGridListModule,
     MatCardModule,
     MatMenuModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    FlexLayoutModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

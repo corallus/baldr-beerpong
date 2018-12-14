@@ -1,0 +1,9 @@
+<div *ngIf="auth.user | async as user">
+  <h2>Add League</h2>
+  <app-league-form></app-league-form>
+  <h2>My Leagues</h2>
+  <app-leagues-list [uid]="user.uid"></app-leagues-list>
+</div>
+
+<h2>Global Leagues</h2>
+<app-leagues-list></app-leagues-list>

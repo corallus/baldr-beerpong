@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { League } from './league';
-import { AuthService, User } from '../../core/auth.service';
+import { AuthService } from '../../core/auth.service';
 
 @Injectable({
   providedIn: 'root'

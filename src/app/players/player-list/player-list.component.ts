@@ -10,7 +10,8 @@ import { LeagueService } from '../../leagues/shared/league.service';
   styleUrls: ['./player-list.component.scss'],
 })
 export class PlayerListComponent implements OnInit {
-  public players: Observable<Player[]>;
+  players: Observable<Player[]>;
+  displayedColumns = ['index', 'score', 'name', 'actions'];
 
   constructor(private service: PlayerService) { }
 

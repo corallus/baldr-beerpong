@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Player } from '../shared/player';
 import { PlayerService } from '../shared/player.service';
-import { LeagueService } from '../../leagues/shared/league.service';
+import { League } from '../../leagues/shared/league';
+import { AuthService, User } from 'src/app/core/auth.service';
 
 @Component({
   selector: 'app-player-list',
@@ -11,12 +12,16 @@ import { LeagueService } from '../../leagues/shared/league.service';
 })
 export class PlayerListComponent implements OnInit {
   players: Observable<Player[]>;
-  displayedColumns = ['index', 'score', 'name', 'actions'];
+  displayedColumns = ['index', 'score', 'name'];
+  @Input() ownLeague: boolean;
 
-  constructor(private service: PlayerService) { }
+  constructor(public auth: AuthService, private service: PlayerService) { }
 
   ngOnInit() {
     this.players = this.service.list();
+    if (this.ownLeague) {
+      this.displayedColumns.push('actions')
+    }
   }
 
   delete(id: string) {

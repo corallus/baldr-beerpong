@@ -8,7 +8,7 @@ import {
 } from '@angular/fire/firestore';
 
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 export interface User {
   uid: string;
@@ -17,7 +17,9 @@ export interface User {
   displayName?: string;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AuthService implements OnDestroy{
   user: Observable<User | null>;
 
@@ -34,8 +36,8 @@ export class AuthService implements OnDestroy{
         } else {
           return of(null);
         }
-      })
-      // tap(user => localStorage.setItem('user', JSON.stringify(user))),
+      }),
+      tap(user => localStorage.setItem('user', JSON.stringify(user))),
       // startWith(JSON.parse(localStorage.getItem('user')))
     );
   }

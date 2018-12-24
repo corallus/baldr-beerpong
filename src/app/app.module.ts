@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireAuthModule, AngularFireAuth } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -21,6 +21,7 @@ import {
   MatButtonModule,
   MatToolbarModule,
   MatGridListModule,
+  MatListModule,
   MatCardModule,
   MatFormFieldModule, 
   MatMenuModule,
@@ -33,7 +34,6 @@ import { MatchListComponent } from './matches/match-list/match-list.component';
 import { MatchCreateComponent } from './matches/match-create/match-create.component';
 import { PlayerCreateComponent } from './players/player-create/player-create.component';
 import { PlayerListComponent } from './players/player-list/player-list.component';
-import { AuthService } from './core/auth.service';
 import { MatchDetailComponent } from './matches/match-list/match-detail/match-detail.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -58,7 +58,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AngularFirestoreModule.enablePersistence(),
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
-    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
@@ -73,15 +72,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatButtonModule,
     MatToolbarModule,
     MatGridListModule,
+    MatListModule,
     MatCardModule,
     MatMenuModule,
     MatFormFieldModule,
     FlexLayoutModule
   ],
-  providers: [AuthService],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-  constructor() {
-  }
-}
+export class AppModule { }

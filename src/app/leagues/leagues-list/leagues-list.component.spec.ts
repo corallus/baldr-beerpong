@@ -1,6 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LeaguesListComponent } from './leagues-list.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from 'src/environments/environment';
+import { MatCardModule, MatIconModule } from '@angular/material';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AuthService } from 'src/app/core/auth.service';
 
 describe('LeaguesListComponent', () => {
   let component: LeaguesListComponent;
@@ -8,7 +15,16 @@ describe('LeaguesListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LeaguesListComponent ]
+      imports: [
+        AngularFireModule.initializeApp(environment.firebase), // imports firebase/app needed for everything
+        RouterTestingModule,
+        MatCardModule,
+        MatIconModule,
+      ],
+      declarations: [ LeaguesListComponent ],
+      providers: [
+        AngularFirestore, AngularFireAuth, AuthService
+      ],
     })
     .compileComponents();
   }));

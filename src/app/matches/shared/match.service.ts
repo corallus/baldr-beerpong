@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map, tap, take } from 'rxjs/operators';
+import * as firebase from 'firebase';
 
 import { Match } from './match';
 import { PlayerService } from '../../players/shared/player.service';
@@ -20,7 +21,7 @@ export class MatchService implements OnDestroy {
   ngOnDestroy() { console.log('MatchService instance destroyed.'); }
 
   create(match: Match): void  {
-    this.collection.add({... match}).catch(error => this.handleError(error));
+    this.collection.add({'timestamp': firebase.database.ServerValue.TIMESTAMP, ... match}).catch(error => this.handleError(error));
   }
 
   // Deletes a single league

@@ -1,5 +1,5 @@
-<ul>
-  <li *ngFor="let match of matches | async; first as isFirst">
-    <app-match-detail [match]="match"></app-match-detail>
-  </li>
-</ul>
+<mat-list>
+  <mat-list-item *ngFor="let match of matches | async">
+    <app-match-detail [match]="match" [ownMatch]="ownLeague"></app-match-detail>
+  </mat-list-item>
+</mat-list>

@@ -10,6 +10,7 @@ import { Result } from '../../shared/elo';
 })
 export class MatchDetailComponent {
   @Input() match: Match
+  @Input() ownMatch: boolean;
 
   constructor(private service: MatchService) { }
 

@@ -25,7 +25,7 @@ export class MatchService implements OnDestroy {
   }
 
   private resetPlayerScores(match: Match) {
-    if (match.result) {
+    if (match.result !== undefined) {
       this.playerService.updateScore(match.white, -match.adjustment.shift.white);
       this.playerService.updateScore(match.black, -match.adjustment.shift.black);
     }
@@ -39,7 +39,7 @@ export class MatchService implements OnDestroy {
   }
 
   updateResult(match: Match, result: Result) {
-    if (match.result != result) {
+    if (match.result !== result) {
       this.resetPlayerScores(match)
       this.leagueService.get().pipe(
         tap(league => {

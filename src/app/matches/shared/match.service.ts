@@ -40,13 +40,18 @@ export class MatchService implements OnDestroy {
 
   updateResult(match: Match, result: Result) {
     if (match.result !== result) {
-      this.resetPlayerScores(match)
+      let shift_white: number = 0
+      let shift_black: number = 0
+      if (match.result !== undefined) {
+        shift_white -= match.adjustment.shift.white
+        shift_black -= match.adjustment.shift.black
+      }
       this.leagueService.get().pipe(
         tap(league => {
           const adj = adjustment(match.white.score, match.black.score, result, league.kfactor)
           this.collection.doc(match.id).update({ result: result, adjustment: adj })
-          this.playerService.updateScore(match.white, adj.shift.white)
-          this.playerService.updateScore(match.black, adj.shift.black)
+          this.playerService.updateScore(match.white, shift_white + adj.shift.white)
+          this.playerService.updateScore(match.black, shift_black + adj.shift.black)
         }),
         take(1)
       )

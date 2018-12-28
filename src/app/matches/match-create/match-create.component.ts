@@ -52,7 +52,6 @@ export class MatchCreateComponent implements OnInit {
       this.whiteFilteredPlayers = this.players
       this.blackFilteredPlayers = this.players
       this.form.setValue({black: '', white: ''})
-      console.log(this.form.value)
     }
   }
 

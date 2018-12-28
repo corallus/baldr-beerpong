@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder } from '@angular/forms';
 import { League } from '../shared/league';
 import { LeagueService } from '../shared/league.service';
-import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { tap, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -12,7 +11,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./league-form.component.scss']
 })
 export class LeagueFormComponent implements OnInit {
-  league: Observable<League> = null;
+  @Input() league$?: Observable<League>
 
   form = this.fb.group({
     'name': [null, Validators.required],
@@ -22,25 +21,25 @@ export class LeagueFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private service: LeagueService) { }
 
   ngOnInit() {
-    if (this.service.document) {
-      this.service.getLeague().pipe(
-        tap(doc => {
-          if (doc) {
-            this.form.patchValue(doc)
+    if (this.league$) {
+      this.league$.pipe(
+        tap(league => {
+          if (league) {
+            this.form.patchValue(league)
           }
         }),
         take(1)
       )
-        .subscribe();
+        .subscribe()
     }
   }
 
   onSubmit() {
-    if (this.service.document) {
+    if (this.league$) {
       this.service.update(this.form.value)
     } else {
       this.service.add(this.form.value)
-      this.form.reset();
+      this.form.reset()
     }
   }
 

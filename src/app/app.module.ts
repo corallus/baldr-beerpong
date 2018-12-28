@@ -37,6 +37,7 @@ import { PlayerListComponent } from './players/player-list/player-list.component
 import { MatchDetailComponent } from './matches/match-list/match-detail/match-detail.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     PlayerListComponent,
     MatchDetailComponent,
     DashboardComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,

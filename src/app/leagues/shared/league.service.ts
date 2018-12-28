@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { League } from './league';
@@ -39,14 +39,18 @@ export class LeagueService implements OnDestroy {
       ))
   }
 
-  getLeague(): Observable<League> {
+  private setDocument(key: string) {
+    this.document = this.collection.doc(key)
+  }
+
+  get(): Observable<League> {
     return this.document.valueChanges();
   }
 
   // Return a single observable item
-  get(key: string): Observable<League> {
-    this.document = this.collection.doc(key);
-    return this.getLeague();
+  set(key: string): Observable<League> {
+    this.setDocument(key);
+    return this.get();
   }
 
   add(league: League): void {
@@ -56,7 +60,8 @@ export class LeagueService implements OnDestroy {
   }
 
   update(league: League): void {
-    this.document.update(league).catch(error => this.handleError(error));
+    delete league.id
+    this.document.update(league).catch(error => this.handleError(error))
   }
 
   // Deletes a single league
@@ -68,4 +73,26 @@ export class LeagueService implements OnDestroy {
     console.log(error);
     console.log('in leagueService');
   }
+}
+
+class LeagueServiceMock extends LeagueService {
+  mockData: League[] = [
+      {
+        'name': 'beerpong',
+        'kfactor': 12,
+        'uid': '7e9'
+      }
+    ]
+  list(): Observable<League[]> {
+    return of(this.mockData)
+  }
+
+  get(): Observable<League> {
+    return of(this.mockData[0])
+  }
+
+  add(league: League): void {
+    this.mockData.push(league)
+  }
+
 }

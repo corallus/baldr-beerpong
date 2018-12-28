@@ -1,11 +1,12 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { League } from '../shared/league'
 import { LeagueService } from '../shared/league.service'
 import { MatchService } from '../../matches/shared/match.service';
 import { PlayerService } from '../../players/shared/player.service';
 import { AuthService } from 'src/app/core/auth.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-league-detail',
@@ -14,12 +15,15 @@ import { AuthService } from 'src/app/core/auth.service';
   providers: [MatchService, PlayerService]
 })
 export class LeagueDetailComponent implements OnInit, OnDestroy {
-  league: Observable<League>;
+  league$: Observable<League>;
 
   constructor(public auth: AuthService, private route: ActivatedRoute, private service: LeagueService) { }
 
   ngOnInit() {
-    this.league = this.service.get(this.route.snapshot.params['id']);
+    this.league$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.service.set(params.get('id')))
+    );
   }
 
   ngOnDestroy() {

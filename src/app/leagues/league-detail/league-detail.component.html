@@ -1,7 +1,7 @@
 <a [routerLink]="['/']" class="btn text-default">
   leagues
 </a>
-<div class="league-detail" *ngIf="league | async as league; else loading">
+<div class="league-detail" *ngIf="league$ | async as league; else loading">
   <h1>{{ league.name }}</h1>
   <ng-container *ngIf="auth.user | async as user">
     <div *ngIf="user.uid == league.uid">

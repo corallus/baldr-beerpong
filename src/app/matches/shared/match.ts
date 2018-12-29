@@ -7,5 +7,5 @@ export class Match {
     black: Player;
     result?: Result = 0;
     adjustment?: Adjustment;
-    timestamp: string;
+    timestamp: Date;
 }

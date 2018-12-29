@@ -2,8 +2,6 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map, tap, take } from 'rxjs/operators';
-import * as firebase from 'firebase';
-
 import { Match } from './match';
 import { PlayerService } from '../../players/shared/player.service';
 import { LeagueService } from '../../leagues/shared/league.service';
@@ -16,12 +14,15 @@ export class MatchService implements OnDestroy {
 
   constructor(private leagueService: LeagueService, private playerService: PlayerService) {
     console.log('MatchService instance created.');
+    this.collection = this.leagueService.document.collection<Match>('matches', ref => {
+      return ref.orderBy('timestamp', 'desc');
+    });
     this.collection = this.leagueService.document.collection('matches');
   }
   ngOnDestroy() { console.log('MatchService instance destroyed.'); }
 
   create(match: Match): void {
-    this.collection.add({ 'timestamp': firebase.database.ServerValue.TIMESTAMP, ...match }).catch(error => this.handleError(error));
+    this.collection.add({ 'timestamp': Date.now(), ...match }).catch(error => this.handleError(error));
   }
 
   private resetPlayerScores(match: Match) {

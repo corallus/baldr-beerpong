@@ -1,12 +1,14 @@
-.winner {
-    color:green;
-    svg {
-        fill: green;
-    }
+.mat-noscore, .mat-noscore:disabled {
+    background-color: gray;
+    color: #fff;
 }
-.loser {
-    color:red;
-    svg {
-        fill: red;
-    }
+
+.mat-winner, .mat-winner:disabled {
+    background-color: green;
+    color: #fff;
+}
+
+.mat-loser, .mat-loser:disabled {
+    background-color: red;
+    color: #fff;
 }

@@ -1,17 +1,17 @@
 <ng-container *ngIf="match">
-  <a (click)="setResult(1)">
-    <span class="{{ match.result==1 ? 'winner' : 'loser' }}">
-      {{ match.white.name }}
-    </span>
-  </a>
+  <button mat-raised-button [disabled]="!ownMatch" [color]="match.result===1 ? 'winner' : (match.result===-1 ? 'loser' : 'noscore')" (click)="setResult(1)">
+    {{ match.white.name }}
+    <ng-container *ngIf="match.adjustment !== undefined">
+      {{ match.adjustment.shift.white }}
+    </ng-container>
+  </button>
   vs
-  <a (click)="setResult(-1)">
-    <span class="{{ match.result==-1 ? 'winner' : 'loser' }}">
-      {{ match.black.name }}
-      <span matBadge="{{ match.adjustment.shift.black }}" matBadgeOverlap="false" *ngIf="match.adjustment !== undefined">
-      </span>
-    </span>
-  </a>
+  <button mat-raised-button [disabled]="!ownMatch" [color]="match.result===-1 ? 'winner' : (match.result===1 ? 'loser' : 'noscore')" (click)="setResult(-1)">
+    {{ match.black.name }}
+    <ng-container *ngIf="match.adjustment !== undefined">
+      {{ match.adjustment.shift.black }}
+    </ng-container>
+  </button>
   <button mat-button *ngIf="ownMatch" (click)="delete(match)">
     <mat-icon>delete</mat-icon>
   </button>

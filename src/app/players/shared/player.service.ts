@@ -22,18 +22,6 @@ export class PlayerService implements OnDestroy {
     this.collection.add({... player});
   }
 
-  filterByName(name: string): Observable<Player[]> {
-    const filterValue = name.toLowerCase();
-    return this.collection.snapshotChanges().pipe(
-      map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Player;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      }).filter(player => player.name.toLowerCase().includes(filterValue))
-      )
-    );
-  }
-
   updateScore(player: Player, shift: number) {
     this.get(player.id).pipe(
       tap(dbplayer => {
@@ -60,7 +48,14 @@ export class PlayerService implements OnDestroy {
         const id = a.payload.doc.id;
         return { id, ...data };
       }))
-    );
+    )
+  }
+
+  filterByName(name: string): Observable<Player[]> {
+    const filterValue = name.toLowerCase();
+    return this.list().pipe(map(players =>
+      players.filter(player => player.name.toLowerCase().includes(filterValue))
+    ))
   }
  
   // Deletes a single player

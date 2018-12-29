@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder } from '@angular/forms';
 import { MatchService } from '../shared/match.service';
 import { Player } from '../../players/shared/player';
 import { PlayerService } from '../../players/shared/player.service';
@@ -40,7 +40,7 @@ export class MatchCreateComponent implements OnInit {
   }
 
   displayName(player?: Player): string | undefined {
-    return player ? player.name : undefined;
+    return player ? player.name : undefined
   }
 
   onPlayerSelect(evt: any) {

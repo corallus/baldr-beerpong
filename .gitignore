@@ -43,3 +43,4 @@ src/environments/environment.ts
 
 functions/node_modules
 .cache
+/.firebase

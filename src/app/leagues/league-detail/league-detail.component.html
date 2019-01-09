@@ -6,11 +6,12 @@
     <div *ngIf="user && user.uid == league.uid">
       <app-league-form [league$]="league$"></app-league-form>
 
+      <h3>Player Form</h3>
+      <app-player-create></app-player-create>
+
       <h3>Match Form</h3>
       <app-match-create></app-match-create>
 
-      <h3>Player Form</h3>
-      <app-player-create></app-player-create>
     </div>
 
     <div class="row">

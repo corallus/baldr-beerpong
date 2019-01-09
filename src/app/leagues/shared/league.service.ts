@@ -1,35 +1,35 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Injectable, OnDestroy } from '@angular/core'
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore'
+import { Observable, of } from 'rxjs'
+import { map } from 'rxjs/operators'
 
-import { League } from './league';
-import { AuthService } from '../../core/auth.service';
+import { League } from './league'
+import { AuthService } from '../../core/auth.service'
 
 @Injectable({
   providedIn: 'root'
 })
 export class LeagueService implements OnDestroy {
-  document: AngularFirestoreDocument<League> = null;
+  document: AngularFirestoreDocument<League> = null
 
-  private collection: AngularFirestoreCollection<League>;
+  private collection: AngularFirestoreCollection<League>
 
   constructor(private auth: AuthService, private db: AngularFirestore) {
-    console.log('LeagueService instance created.');
-    this.collection = this.db.collection<League>('leagues');
+    console.log('LeagueService instance created.')
+    this.collection = this.db.collection<League>('leagues')
   }
   ngOnDestroy() {
-    console.log('LeagueService instance destroyed.');
+    console.log('LeagueService instance destroyed.')
   }
 
   list(): Observable<League[]> {
     return this.collection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as League;
-        const id = a.payload.doc.id;
-        return { id, ...data };
+        const data = a.payload.doc.data() as League
+        const id = a.payload.doc.id
+        return { id, ...data }
       }))
-    );
+    )
   }
 
   listOwnedLeagues(uid: string): Observable<League[]> {
@@ -44,18 +44,18 @@ export class LeagueService implements OnDestroy {
   }
 
   get(): Observable<League> {
-    return this.document.valueChanges();
+    return this.document.valueChanges()
   }
 
   // Return a single observable item
   set(key: string): Observable<League> {
-    this.setDocument(key);
-    return this.get();
+    this.setDocument(key)
+    return this.get()
   }
 
   add(league: League): void {
     this.auth.user.subscribe(user => {
-      if (user) this.collection.add({ ...league, uid: user.uid }).catch(error => this.handleError(error));
+      if (user) { this.collection.add({ ...league, uid: user.uid }).catch(error => this.handleError(error)) }
     })
   }
 
@@ -66,12 +66,12 @@ export class LeagueService implements OnDestroy {
 
   // Deletes a single league
   delete(key: string): void {
-    this.collection.doc(key).delete().catch(error => this.handleError(error));
+    this.collection.doc(key).delete().catch(error => this.handleError(error))
   }
 
   private handleError(error) {
-    console.log(error);
-    console.log('in leagueService');
+    console.log(error)
+    console.log('in leagueService')
   }
 }
 

@@ -1,19 +1,19 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { PlayerCreateComponent } from './player-create.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material';
-import { PlayerService } from '../shared/player.service';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AuthService } from 'src/app/core/auth.service';
-import { AngularFireModule } from '@angular/fire';
-import { environment } from 'src/environments/environment';
-import { RouterTestingModule } from '@angular/router/testing';
+import { PlayerCreateComponent } from './player-create.component'
+import { ReactiveFormsModule } from '@angular/forms'
+import { MatInputModule } from '@angular/material'
+import { PlayerService } from '../shared/player.service'
+import { AngularFirestore } from '@angular/fire/firestore'
+import { AngularFireAuth } from '@angular/fire/auth'
+import { AuthService } from 'src/app/core/auth.service'
+import { AngularFireModule } from '@angular/fire'
+import { environment } from 'src/environments/environment'
+import { RouterTestingModule } from '@angular/router/testing'
 
 describe('PlayerCreateComponent', () => {
-  let component: PlayerCreateComponent;
-  let fixture: ComponentFixture<PlayerCreateComponent>;
+  let component: PlayerCreateComponent
+  let fixture: ComponentFixture<PlayerCreateComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -28,16 +28,16 @@ describe('PlayerCreateComponent', () => {
         AngularFirestore, AngularFireAuth, AuthService, PlayerService
       ]
     })
-    .compileComponents();
-  }));
+    .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PlayerCreateComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(PlayerCreateComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

@@ -1,5 +1,6 @@
-<ng-container *ngIf="match">
-  <button mat-raised-button [disabled]="!ownMatch" [color]="match.result===1 ? 'winner' : (match.result===-1 ? 'loser' : 'noscore')" (click)="setResult(1)">
+<div *ngIf="match" class="match">
+  <button mat-raised-button [disabled]="!ownMatch" [color]="match.result===1 ? 'winner' : (match.result===-1 ? 'loser' : 'noscore')"
+    (click)="setResult(1)">
     {{ match.white.name }}
     <ng-container *ngIf="match.adjustment !== undefined">
       {{ match.adjustment.shift.white }}
@@ -9,9 +10,10 @@
     <ng-container *ngIf="match.result === 0">
       draw
     </ng-container>
-      vs
+    vs
   </button>
-  <button mat-raised-button [disabled]="!ownMatch" [color]="match.result===-1 ? 'winner' : (match.result===1 ? 'loser' : 'noscore')" (click)="setResult(-1)">
+  <button mat-raised-button [disabled]="!ownMatch" [color]="match.result===-1 ? 'winner' : (match.result===1 ? 'loser' : 'noscore')"
+    (click)="setResult(-1)">
     {{ match.black.name }}
     <ng-container *ngIf="match.adjustment !== undefined">
       {{ match.adjustment.shift.black }}
@@ -20,5 +22,4 @@
   <button mat-button *ngIf="ownMatch" (click)="delete(match)">
     <mat-icon>delete</mat-icon>
   </button>
-  {{ match.timestamp | date : 'shortTime' }}
-</ng-container>
+</div>

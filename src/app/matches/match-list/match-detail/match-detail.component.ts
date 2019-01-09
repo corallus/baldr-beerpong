@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { Match } from '../../shared/match';
-import { MatchService } from '../../shared/match.service';
-import { Result } from '../../shared/elo';
+import { Component, Input } from '@angular/core'
+import { Match } from '../../shared/match'
+import { MatchService } from '../../shared/match.service'
+import { Result } from '../../shared/elo'
 
 @Component({
   selector: 'app-match-detail',
@@ -10,12 +10,12 @@ import { Result } from '../../shared/elo';
 })
 export class MatchDetailComponent {
   @Input() match: Match
-  @Input() ownMatch: boolean;
+  @Input() ownMatch: boolean
 
   constructor(private service: MatchService) { }
 
   delete(match: Match) {
-    if (confirm("Are you sure to delete this record?")) {
+    if (confirm('Are you sure to delete this record?')) {
       this.service.delete(match)
     }
   }

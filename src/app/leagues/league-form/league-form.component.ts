@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
-import { League } from '../shared/league';
-import { LeagueService } from '../shared/league.service';
-import { tap, take } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Component, OnInit, Input } from '@angular/core'
+import { Validators, FormBuilder } from '@angular/forms'
+import { League } from '../shared/league'
+import { LeagueService } from '../shared/league.service'
+import { tap, take } from 'rxjs/operators'
+import { Observable } from 'rxjs'
 
 @Component({
   selector: 'app-league-form',
@@ -16,7 +16,7 @@ export class LeagueFormComponent implements OnInit {
   form = this.fb.group({
     'name': [null, Validators.required],
     'kfactor': [32, Validators.compose([Validators.min(10), Validators.max(32)])],
-  });
+  })
 
   constructor(private fb: FormBuilder, private service: LeagueService) { }
 

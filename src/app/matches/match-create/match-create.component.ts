@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Validators, FormBuilder } from '@angular/forms';
-import { MatchService } from '../shared/match.service';
-import { Player } from '../../players/shared/player';
-import { PlayerService } from '../../players/shared/player.service';
-import { startWith, map, switchMap } from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core'
+import { Observable } from 'rxjs'
+import { Validators, FormBuilder } from '@angular/forms'
+import { MatchService } from '../shared/match.service'
+import { Player } from '../../players/shared/player'
+import { PlayerService } from '../../players/shared/player.service'
+import { startWith, map, switchMap } from 'rxjs/operators'
 
 @Component({
   selector: 'app-match-create',

@@ -1,6 +1,6 @@
 export class Player {
-    id?: string;
-    name: string;
-    rank: number;
-    score: number = 1500;
+    id?: string
+    name: string
+    rank: number
+    score = 1500
 }

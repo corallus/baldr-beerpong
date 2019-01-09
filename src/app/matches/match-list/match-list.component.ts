@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Match } from '../shared/match';
-import { MatchService } from '../shared/match.service';
+import { Component, OnInit, Input } from '@angular/core'
+import { Observable } from 'rxjs'
+import { Match } from '../shared/match'
+import { MatchService } from '../shared/match.service'
 
 @Component({
   selector: 'app-match-list',
@@ -9,13 +9,13 @@ import { MatchService } from '../shared/match.service';
   styleUrls: ['./match-list.component.scss'],
 })
 export class MatchListComponent implements OnInit {
-  matches: Observable<Match[]>;
-  @Input() ownLeague: boolean;
+  matches: Observable<Match[]>
+  @Input() ownLeague: boolean
 
   constructor(private service: MatchService) { }
 
   ngOnInit() {
-    this.matches = this.service.list();
+    this.matches = this.service.list()
   }
 
 }

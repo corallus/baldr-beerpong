@@ -1,25 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing'
 
-import { LeagueDetailComponent } from './league-detail.component';
-import { LeagueFormComponent } from '../league-form/league-form.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatchCreateComponent } from 'src/app/matches/match-create/match-create.component';
-import { PlayerCreateComponent } from 'src/app/players/player-create/player-create.component';
-import { MatchListComponent } from 'src/app/matches/match-list/match-list.component';
-import { PlayerListComponent } from 'src/app/players/player-list/player-list.component';
-import { MatAutocompleteModule, MatInputModule, MatListModule, MatIconModule, MatTableModule, MatBadgeModule } from '@angular/material';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatchDetailComponent } from 'src/app/matches/match-list/match-detail/match-detail.component';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { AuthService } from 'src/app/core/auth.service';
-import { AngularFireModule } from '@angular/fire';
-import { environment } from 'src/environments/environment';
-import { RouterTestingModule } from '@angular/router/testing';
+import { LeagueDetailComponent } from './league-detail.component'
+import { LeagueFormComponent } from '../league-form/league-form.component'
+import { MatchCreateComponent } from 'src/app/matches/match-create/match-create.component'
+import { PlayerCreateComponent } from 'src/app/players/player-create/player-create.component'
+import { MatchListComponent } from 'src/app/matches/match-list/match-list.component'
+import { PlayerListComponent } from 'src/app/players/player-list/player-list.component'
+import { MatAutocompleteModule, MatInputModule, MatListModule, MatIconModule, MatTableModule, MatBadgeModule } from '@angular/material'
+import { ReactiveFormsModule } from '@angular/forms'
+import { MatchDetailComponent } from 'src/app/matches/match-list/match-detail/match-detail.component'
+import { AngularFirestore } from '@angular/fire/firestore'
+import { AngularFireAuth } from '@angular/fire/auth'
+import { AuthService } from 'src/app/core/auth.service'
+import { AngularFireModule } from '@angular/fire'
+import { environment } from 'src/environments/environment'
+import { RouterTestingModule } from '@angular/router/testing'
 
 describe('LeagueDetailComponent', () => {
-  let component: LeagueDetailComponent;
-  let fixture: ComponentFixture<LeagueDetailComponent>;
+  let component: LeagueDetailComponent
+  let fixture: ComponentFixture<LeagueDetailComponent>
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -47,16 +46,16 @@ describe('LeagueDetailComponent', () => {
         AngularFirestore, AngularFireAuth, AuthService
       ],
     })
-      .compileComponents();
-  }));
+      .compileComponents()
+  }))
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LeagueDetailComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    fixture = TestBed.createComponent(LeagueDetailComponent)
+    component = fixture.componentInstance
+    fixture.detectChanges()
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+    expect(component).toBeTruthy()
+  })
+})

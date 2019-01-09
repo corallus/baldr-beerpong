@@ -1,34 +1,33 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { map, tap, take } from 'rxjs/operators';
-import { Match } from './match';
-import { PlayerService } from '../../players/shared/player.service';
-import { LeagueService } from '../../leagues/shared/league.service';
-import { adjustment, Result } from './elo';
+import { Injectable, OnDestroy } from '@angular/core'
+import { AngularFirestoreCollection } from '@angular/fire/firestore'
+import { Observable } from 'rxjs'
+import { map, tap, take } from 'rxjs/operators'
+import { Match } from './match'
+import { PlayerService } from '../../players/shared/player.service'
+import { LeagueService } from '../../leagues/shared/league.service'
+import { adjustment, Result } from './elo'
 
 @Injectable()
 export class MatchService implements OnDestroy {
 
-  private collection: AngularFirestoreCollection<Match>;
+  private collection: AngularFirestoreCollection<Match>
 
   constructor(private leagueService: LeagueService, private playerService: PlayerService) {
-    console.log('MatchService instance created.');
+    console.log('MatchService instance created.')
     this.collection = this.leagueService.document.collection<Match>('matches', ref => {
-      return ref.orderBy('timestamp', 'desc');
-    });
-    this.collection = this.leagueService.document.collection('matches');
+      return ref.orderBy('timestamp', 'desc')
+    })
   }
-  ngOnDestroy() { console.log('MatchService instance destroyed.'); }
+  ngOnDestroy() { console.log('MatchService instance destroyed.') }
 
   create(match: Match): void {
-    this.collection.add({ 'timestamp': Date.now(), ...match }).catch(error => this.handleError(error));
+    this.collection.add({ 'timestamp': Date.now(), ...match }).catch(error => this.handleError(error))
   }
 
   private resetPlayerScores(match: Match) {
     if (match.result !== undefined) {
-      this.playerService.updateScore(match.white, -match.adjustment.shift.white);
-      this.playerService.updateScore(match.black, -match.adjustment.shift.black);
+      this.playerService.updateScore(match.white, -match.adjustment.shift.white)
+      this.playerService.updateScore(match.black, -match.adjustment.shift.black)
     }
   }
 
@@ -36,13 +35,13 @@ export class MatchService implements OnDestroy {
   delete(match: Match): void {
     this.collection.doc(match.id).delete().then(_ => {
       this.resetPlayerScores(match)
-    }).catch(error => this.handleError(error));
+    }).catch(error => this.handleError(error))
   }
 
   updateResult(match: Match, result: Result) {
     if (match.result !== result) {
-      let shift_white: number = 0
-      let shift_black: number = 0
+      let shift_white = 0
+      let shift_black = 0
       if (match.result !== undefined) {
         shift_white -= match.adjustment.shift.white
         shift_black -= match.adjustment.shift.black
@@ -63,12 +62,12 @@ export class MatchService implements OnDestroy {
   list(): Observable<Match[]> {
     return this.collection.snapshotChanges().pipe(
       map(actions => actions.map(a => {
-        const data = a.payload.doc.data() as Match;
-        const id = a.payload.doc.id;
-        return { id, ...data };
+        const data = a.payload.doc.data() as Match
+        const id = a.payload.doc.id
+        return { id, ...data }
       })
       )
-    );
+    )
   }
 
   finishedMatches(): Observable<Match[]> {
@@ -84,7 +83,7 @@ export class MatchService implements OnDestroy {
   }
 
   private handleError(error) {
-    console.log(error);
-    console.log('in matchService');
+    console.log(error)
+    console.log('in matchService')
   }
 }
